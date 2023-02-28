@@ -10,7 +10,7 @@ open class Posicions(
     var title: String = "",
     var lat: Double = 0.0,
     var lon: Double = 0.0,
-    var image: String = "",
+    var image: ByteArray? = null,
     var owner_id: String = ""
 ) : RealmObject {
     // Declaring empty contructor

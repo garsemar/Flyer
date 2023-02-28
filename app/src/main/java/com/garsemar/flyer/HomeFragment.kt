@@ -24,7 +24,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.login.setOnClickListener {
-            val action = FragmentHomeBinding.ac()
+            val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
+            findNavController().navigate(action)
+        }
+        binding.register.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToRegisterFragment()
             findNavController().navigate(action)
         }
     }
