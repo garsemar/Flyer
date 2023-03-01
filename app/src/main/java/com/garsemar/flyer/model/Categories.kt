@@ -11,8 +11,5 @@ open class Categories(
     var description: String = "",
     var owner_id: String = ""
 ) : RealmObject {
-    // Declaring empty contructor
-    constructor() : this(owner_id = "") {}
-    //var doAfter: RealmList<Item>? = realmListOf()
-    override fun toString() = "Categories($title, $description)"
+    constructor() : this(owner_id = "")
 }

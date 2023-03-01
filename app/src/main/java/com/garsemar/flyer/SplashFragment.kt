@@ -21,12 +21,12 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        println("hola")
         if(!RealmManager().loggedIn()){
             action = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
         }
         else{
-            action = SplashFragmentDirections.actionSplashFragmentToMapsFragment()
+            action = SplashFragmentDirections.actionSplashFragmentToMapFragment()
         }
         findNavController().navigate(action)
     }

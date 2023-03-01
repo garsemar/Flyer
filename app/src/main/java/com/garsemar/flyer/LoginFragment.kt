@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.garsemar.flyer.databinding.FragmentHomeBinding
 import com.garsemar.flyer.databinding.FragmentLoginBinding
 import com.garsemar.flyer.realm.RealmManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -29,11 +30,10 @@ class LoginFragment : Fragment() {
         val realmManager = RealmManager()
 
         binding.ok.setOnClickListener {
-            GlobalScope.launch {
-                if(realmManager.login(binding.email.toString(), binding.password.toString())){
-                    val action = RegisterFragmentDirections.actionRegisterFragmentToMapsFragment()
-                    findNavController().navigate(action)
-                }
+            GlobalScope.launch(Dispatchers.Main) {
+                realmManager.login(binding.email.text.toString(), binding.password.text.toString())
+                val action = LoginFragmentDirections.actionLoginFragmentToMapFragment()
+                findNavController().navigate(action)
             }
         }
     }
