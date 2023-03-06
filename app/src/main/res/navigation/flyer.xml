@@ -51,4 +51,10 @@
         android:id="@+id/mapFragment"
         android:name="com.garsemar.flyer.MapFragment"
         android:label="MapFragment" />
+
+    <fragment
+        android:id="@+id/fragment1"
+        android:name="com.garsemar.flyer.MapFragment"
+        android:label="fragment_1"
+        tools:layout="@layout/fragment_maps" />
 </navigation>
