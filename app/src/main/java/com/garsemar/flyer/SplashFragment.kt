@@ -26,7 +26,8 @@ class SplashFragment : Fragment() {
             action = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
         }
         else{
-            action = SplashFragmentDirections.actionSplashFragmentToMapFragment()
+            // action = SplashFragmentDirections.actionSplashFragmentToMapFragment()
+            action = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
         }
         findNavController().navigate(action)
     }

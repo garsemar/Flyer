@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.garsemar.flyer.databinding.FragmentHomeBinding
 import com.garsemar.flyer.databinding.FragmentLoginBinding
 import com.garsemar.flyer.realm.RealmManager
 import kotlinx.coroutines.Dispatchers
