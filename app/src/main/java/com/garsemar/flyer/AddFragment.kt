@@ -14,6 +14,7 @@ import com.garsemar.flyer.databinding.FragmentHomeBinding
 import com.garsemar.flyer.model.Posicions
 import com.garsemar.flyer.realm.PosicionsDao
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
@@ -46,7 +47,12 @@ class AddFragment : Fragment() {
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
         val image = stream.toByteArray()
 
-        binding.title.setOnClickListener{
+        val ns = realmManager.posicionsDao.listFlow()
+
+        GlobalScope.launch{ ns.collect { println(it) } }
+
+        binding.add.setOnClickListener{
+            println(binding.title.text)
             realmManager.posicionsDao.insertItem(binding.title.text.toString(), lat!!.toDouble(), lan!!.toDouble(), image)
         }
     }

@@ -12,6 +12,7 @@ class PosicionsDao(val realm: Realm, val userId: String){
 
     fun insertItem(title: String, lat: Double, lon: Double, image: ByteArray){
         realm.writeBlocking {
+            println("$title, $lat, $lon")
             val item = Posicions(title = title, lat = lat, lon = lon, image = image, owner_id = userId)
             copyToRealm(item)
         }
