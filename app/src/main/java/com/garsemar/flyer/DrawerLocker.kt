@@ -1,4 +1,5 @@
 package com.garsemar.flyer
 
-interface DrawerLocker {
+internal interface DrawerLocker {
+    fun setDrawerLocked(shouldLock: Boolean)
 }

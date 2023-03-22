@@ -7,7 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import com.garsemar.flyer.MainActivity.Companion.realmManager
 import com.garsemar.flyer.realm.RealmManager
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class SplashFragment : Fragment() {
     lateinit var action: NavDirections
@@ -21,13 +25,13 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        println("hola")
         if(!RealmManager().loggedIn()){
             action = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
         }
         else{
             // action = SplashFragmentDirections.actionSplashFragmentToMapFragment()
-            action = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
+            runBlocking{ realmManager.realmManager.configureRealm() }
+            action = SplashFragmentDirections.actionSplashFragmentToMapFragment()
         }
         findNavController().navigate(action)
     }

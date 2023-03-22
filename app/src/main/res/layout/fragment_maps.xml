@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/addMark"
         android:layout_width="284dp"
         android:layout_height="0dp"
         android:clickable="true"

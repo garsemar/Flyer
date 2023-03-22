@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/fragment_1" android:id="@+id/fragment1"/>
-    <item android:title="@string/fragment_2" android:id="@+id/fragment2"/>
+    <item android:title="@string/map" android:id="@+id/mapFragment"/>
+    <item android:title="@string/bookmarks" android:id="@+id/bookmarksFragment"/>
 </menu>

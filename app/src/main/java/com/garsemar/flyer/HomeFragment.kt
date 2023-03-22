@@ -1,10 +1,10 @@
 package com.garsemar.flyer
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.garsemar.flyer.databinding.FragmentHomeBinding
 
@@ -17,6 +17,7 @@ class HomeFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        (activity as DrawerLocker).setDrawerLocked(true)
         return binding.root
     }
 
@@ -31,5 +32,10 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToRegisterFragment()
             findNavController().navigate(action)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as DrawerLocker).setDrawerLocked(false)
     }
 }

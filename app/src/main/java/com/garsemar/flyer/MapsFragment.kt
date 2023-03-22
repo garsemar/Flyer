@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MapFragment : Fragment() {
     override fun onCreateView(
@@ -22,10 +25,13 @@ class MapFragment : Fragment() {
         val supportMapFragment =
             childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
 
+        var cords: LatLng? = null
+
         // Async map
         supportMapFragment!!.getMapAsync { googleMap ->
             // When map is loaded
             googleMap.setOnMapClickListener { latLng -> // When clicked on map
+                cords = latLng
                 // Initialize marker options
                 val markerOptions = MarkerOptions()
                 // Set position of marker
@@ -40,6 +46,17 @@ class MapFragment : Fragment() {
                 googleMap.addMarker(markerOptions)
             }
         }
+
+        view.findViewById<FloatingActionButton>(R.id.addMark).setOnClickListener {
+            if(cords != null){
+                println("${cords!!.latitude}, ${cords!!.longitude}")
+                val action = MapFragmentDirections.actionMapFragmentToAddFragment()
+                action.lat = cords!!.latitude.toString()
+                action.lan = cords!!.longitude.toString()
+                findNavController().navigate(action)
+            }
+        }
+
         // Return view
         return view
     }

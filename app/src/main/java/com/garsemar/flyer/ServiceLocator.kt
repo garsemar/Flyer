@@ -3,6 +3,7 @@ package com.garsemar.flyer
 import com.garsemar.flyer.realm.PosicionsDao
 import com.garsemar.flyer.realm.RealmManager
 
+
 object ServiceLocator {
     val realmManager = RealmManager()
     lateinit var posicionsDao: PosicionsDao
