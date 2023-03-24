@@ -69,7 +69,11 @@
         android:id="@+id/bookmarksFragment"
         android:name="com.garsemar.flyer.BookmarksFragment"
         android:label="fragment_bookmarks"
-        tools:layout="@layout/fragment_bookmarks" />
+        tools:layout="@layout/fragment_bookmarks" >
+        <action
+            android:id="@+id/action_bookmarksFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.garsemar.flyer.AddFragment"
@@ -85,5 +89,10 @@
             android:name="lan"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.garsemar.flyer.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" />
 
 </navigation>

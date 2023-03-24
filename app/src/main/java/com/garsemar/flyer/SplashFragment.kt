@@ -30,7 +30,10 @@ class SplashFragment : Fragment() {
         }
         else{
             // action = SplashFragmentDirections.actionSplashFragmentToMapFragment()
-            runBlocking{ realmManager.realmManager.configureRealm() }
+            runBlocking{
+                realmManager.realmManager.configureRealm()
+                realmManager.configureRealm()
+            }
             action = SplashFragmentDirections.actionSplashFragmentToMapFragment()
         }
         findNavController().navigate(action)

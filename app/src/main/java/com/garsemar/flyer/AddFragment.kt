@@ -34,8 +34,6 @@ class AddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        realmManager.configureRealm()
-
         val lat = arguments?.getString("lat")
         val lan = arguments?.getString("lan")
 
@@ -47,12 +45,7 @@ class AddFragment : Fragment() {
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
         val image = stream.toByteArray()
 
-        val ns = realmManager.posicionsDao.listFlow()
-
-        GlobalScope.launch{ ns.collect { println(it) } }
-
         binding.add.setOnClickListener{
-            println(binding.title.text)
             realmManager.posicionsDao.insertItem(binding.title.text.toString(), lat!!.toDouble(), lan!!.toDouble(), image)
         }
     }
