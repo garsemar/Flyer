@@ -114,7 +114,6 @@ class UserAdapter(private val results: List<Posicions>, private val listener: On
             setListener(result._id)
             binding.title.text = result.title
             binding.coords.text = "Lat: ${result.lat}, Lon: ${result.lon}"
-            binding.order.text = result._id.toString()
         }
     }
 }

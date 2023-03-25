@@ -10,7 +10,7 @@ import io.realm.kotlin.mongodb.sync.SyncConfiguration
 class RealmManager {
     val realmApp = App.create(AppConfiguration.Builder("flyer-idoiv").log(LogLevel.ALL).build())
     var realm : Realm? = null
-    private lateinit var user: User
+    lateinit var user: User
 
     fun loggedIn() = realmApp.currentUser?.loggedIn ?: false
 

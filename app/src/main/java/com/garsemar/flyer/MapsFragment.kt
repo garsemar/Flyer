@@ -4,14 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.garsemar.flyer.MainActivity.Companion.realmManager
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 
 class MapFragment : Fragment() {
     override fun onCreateView(
@@ -30,6 +36,18 @@ class MapFragment : Fragment() {
         // Async map
         supportMapFragment!!.getMapAsync { googleMap ->
             // When map is loaded
+            updateUi(googleMap)
+
+            googleMap.setOnMarkerClickListener { marker ->
+                if (marker.isInfoWindowShown) {
+                    marker.hideInfoWindow()
+                } else {
+                    marker.showInfoWindow()
+                }
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 10f))
+                true
+            }
+
             googleMap.setOnMapClickListener { latLng -> // When clicked on map
                 cords = latLng
                 // Initialize marker options
@@ -38,12 +56,13 @@ class MapFragment : Fragment() {
                 markerOptions.position(latLng)
                 // Set title of marker
                 markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
-                // Remove all marker
                 googleMap.clear()
                 // Animating to zoom the marker
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
                 // Add marker on map
                 googleMap.addMarker(markerOptions)
+
+                updateUi(googleMap)
             }
         }
 
@@ -59,5 +78,24 @@ class MapFragment : Fragment() {
 
         // Return view
         return view
+    }
+    fun updateUi(googleMap: GoogleMap){
+        GlobalScope.launch(Dispatchers.Main.immediate) {
+            realmManager.realmManager.configureRealm()
+            realmManager.configureRealm()
+            while (realmManager.realmManager.realm == null){
+                delay(500)
+                println(realmManager.realmManager.realm)
+            }
+            val books = realmManager.posicionsDao.listFlow()
+            books.forEach {
+                val latLng = LatLng(it.lat, it.lon)
+
+                val markerOptions = MarkerOptions()
+                markerOptions.position(latLng)
+                markerOptions.title(it.title)
+                googleMap.addMarker(markerOptions)
+            }
+        }
     }
 }

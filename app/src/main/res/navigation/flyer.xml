@@ -94,5 +94,14 @@
         android:name="com.garsemar.flyer.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" />
+    <fragment
+        android:id="@+id/logOutFragment"
+        android:name="com.garsemar.flyer.LogOutFragment"
+        android:label="fragment_log_out"
+        tools:layout="@layout/fragment_log_out" >
+        <action
+            android:id="@+id/action_logOutFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 </navigation>
