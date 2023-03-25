@@ -72,7 +72,12 @@
         tools:layout="@layout/fragment_bookmarks" >
         <action
             android:id="@+id/action_bookmarksFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment" >
+            <argument
+                android:name="bookId"
+                android:defaultValue="null" />
+        </action>
+        <argument android:name="bookId" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -93,7 +98,15 @@
         android:id="@+id/detailFragment"
         android:name="com.garsemar.flyer.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument android:name="title"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="coords"
+            app:argType="string"
+            android:defaultValue="null" />
+    </fragment>
     <fragment
         android:id="@+id/logOutFragment"
         android:name="com.garsemar.flyer.LogOutFragment"

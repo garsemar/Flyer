@@ -1,7 +1,7 @@
 package com.garsemar.flyer
 
-import io.realm.kotlin.types.ObjectId
+import com.garsemar.flyer.model.Posicions
 
 interface OnClickListener {
-    fun onClick(bookId: ObjectId)
+    fun onClick(bookId: Posicions)
 }

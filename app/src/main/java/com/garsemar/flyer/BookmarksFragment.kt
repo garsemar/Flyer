@@ -16,10 +16,6 @@ import com.garsemar.flyer.databinding.ItemUserBinding
 import com.garsemar.flyer.model.Posicions
 import io.realm.kotlin.types.ObjectId
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.toList
 
 class BookmarksFragment : Fragment(), OnClickListener {
     private lateinit var userAdapter: UserAdapter
@@ -67,9 +63,9 @@ class BookmarksFragment : Fragment(), OnClickListener {
         return myData
     }
 
-    override fun onClick(bookId: ObjectId) {
+    override fun onClick(bookId: Posicions) {
         val action = BookmarksFragmentDirections.actionBookmarksFragmentToDetailFragment()
-        // action.gameId = bookId
+        action.title = bookId.toString()
         findNavController().navigate(action)
 
 
@@ -91,7 +87,7 @@ class UserAdapter(private val results: List<Posicions>, private val listener: On
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val binding = ItemUserBinding.bind(view)
-        fun setListener(gameId: ObjectId){
+        fun setListener(gameId: Posicions){
             binding.root.setOnClickListener {
                 listener.onClick(gameId)
             }
@@ -111,7 +107,7 @@ class UserAdapter(private val results: List<Posicions>, private val listener: On
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val result = results[position]
         with(holder){
-            setListener(result._id)
+            setListener(result)
             binding.title.text = result.title
             binding.coords.text = "Lat: ${result.lat}, Lon: ${result.lon}"
         }
