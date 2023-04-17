@@ -11,6 +11,7 @@ import android.view.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.garsemar.flyer.MainActivity.Companion.realmManager
+import com.garsemar.flyer.MainActivity.Companion.v_supportActionBar
 import com.garsemar.flyer.databinding.FragmentBookmarksBinding
 import com.garsemar.flyer.databinding.ItemUserBinding
 import com.garsemar.flyer.model.Posicions
@@ -29,6 +30,7 @@ class BookmarksFragment : Fragment(), OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentBookmarksBinding.inflate(inflater, container, false)
+        v_supportActionBar.title = "Flyer"
         return binding.root
     }
 
@@ -37,6 +39,7 @@ class BookmarksFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val onClickListener = this
+
         userAdapter = UserAdapter(myData, onClickListener)
         linearLayoutManager = LinearLayoutManager(context)
 
@@ -65,7 +68,7 @@ class BookmarksFragment : Fragment(), OnClickListener {
 
     override fun onClick(bookId: Posicions) {
         val action = BookmarksFragmentDirections.actionBookmarksFragmentToDetailFragment()
-        action.title = bookId.toString()
+        action.id = bookId._id.toString()
         findNavController().navigate(action)
 
 

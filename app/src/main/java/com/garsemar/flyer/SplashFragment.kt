@@ -25,6 +25,7 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainActivity.v_supportActionBar.title = "Flyer"
         if(!RealmManager().loggedIn()){
             action = SplashFragmentDirections.actionSplashFragmentToHomeFragment()
         }

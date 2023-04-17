@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.garsemar.flyer.MainActivity.Companion.realmManager
+import com.garsemar.flyer.MainActivity.Companion.v_supportActionBar
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -24,6 +25,8 @@ class MapFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        v_supportActionBar.show()
+        v_supportActionBar.title = "Flyer"
         // Initialize view
         val view: View = inflater.inflate(R.layout.fragment_maps, container, false)
 
@@ -68,11 +71,12 @@ class MapFragment : Fragment() {
 
         view.findViewById<FloatingActionButton>(R.id.addMark).setOnClickListener {
             if(cords != null){
-                println("${cords!!.latitude}, ${cords!!.longitude}")
-                val action = MapFragmentDirections.actionMapFragmentToAddFragment()
-                action.lat = cords!!.latitude.toString()
-                action.lan = cords!!.longitude.toString()
-                findNavController().navigate(action)
+                if(realmManager.realmManager.realm != null){
+                    val action = MapFragmentDirections.actionMapFragmentToAddFragment()
+                    action.lat = cords!!.latitude.toString()
+                    action.lan = cords!!.longitude.toString()
+                    findNavController().navigate(action)
+                }
             }
         }
 

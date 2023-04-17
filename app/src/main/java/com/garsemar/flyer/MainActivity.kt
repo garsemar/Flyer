@@ -1,6 +1,7 @@
 package com.garsemar.flyer
 
 import android.os.Bundle
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -16,6 +17,7 @@ import kotlinx.coroutines.runBlocking
 class MainActivity : AppCompatActivity(), DrawerLocker {
     companion object {
         val realmManager = ServiceLocator
+        lateinit var v_supportActionBar: ActionBar
     }
 
     lateinit var binding: ActivityMainBinding
@@ -29,14 +31,16 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        actionBar?.title = "Flyer"
-
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         val drawerLayout = binding.drawerLayout
         binding.navigationView.setupWithNavController(navController)
         appBarConfiguration = AppBarConfiguration(setOf(R.id.mapFragment, R.id.bookmarksFragment), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        v_supportActionBar = supportActionBar!!
+        v_supportActionBar.title = "Flyer"
+        v_supportActionBar.hide()
     }
 
     override fun onSupportNavigateUp(): Boolean {

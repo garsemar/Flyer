@@ -99,11 +99,7 @@
         android:name="com.garsemar.flyer.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
-        <argument android:name="title"
-            app:argType="string"
-            android:defaultValue="null" />
-        <argument
-            android:name="coords"
+        <argument android:name="id"
             app:argType="string"
             android:defaultValue="null" />
     </fragment>

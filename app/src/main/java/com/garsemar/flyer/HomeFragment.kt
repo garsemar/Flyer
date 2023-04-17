@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.garsemar.flyer.MainActivity.Companion.v_supportActionBar
 import com.garsemar.flyer.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -24,6 +25,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        v_supportActionBar.hide()
+
         binding.login.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
             findNavController().navigate(action)
@@ -38,4 +41,8 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         (activity as DrawerLocker).setDrawerLocked(false)
     }
+}
+
+internal interface DrawerLocker {
+    fun setDrawerLocked(shouldLock: Boolean)
 }
