@@ -23,7 +23,7 @@ class PosicionsDao(val realm: Realm, val userId: String){
 
     fun deleteItem(id: ObjectId){
         realm.writeBlocking {
-            //delete<Posicions>()
+            delete(query<Posicions>("_id = $0", id).find())
         }
     }
 }
