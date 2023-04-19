@@ -2,6 +2,8 @@ package com.garsemar.flyer
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -14,7 +16,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -72,6 +76,7 @@ class AddFragment : Fragment() {
         }
 
         binding.cameraCaptureButton.setOnClickListener { takePhoto() }
+        binding.browsePhotoButton.setOnClickListener { browsePhoto() }
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -125,6 +130,38 @@ class AddFragment : Fragment() {
             })
     }
 
+    fun browsePhoto(){
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "image/*"
+        resultLauncher.launch(intent)
+    }
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if(result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            val imageList = listOf<ImageView>(binding.imageView)
+
+            if(data?.clipData != null){
+                var count = data.clipData?.itemCount
+                for(i in 0 until count!!){
+                    var imageUri:Uri = data.clipData?.getItemAt(i)!!.uri
+                    imageList[i].setImageURI(imageUri)
+                }
+            }
+            else if(data?.data != null){
+                val imageUri: Uri = data.data!!
+                savedUri = imageUri
+                binding.imageView.setImageURI(null)
+                binding.imageView.setImageURI(savedUri)
+                binding.viewFinder.visibility = View.GONE
+                binding.imageView.visibility = View.VISIBLE
+            }
+
+        }
+    }
+
     private fun getOutputDirectory(): File {
         val mediaDir = requireContext().externalMediaDirs.firstOrNull()?.let {
             File(it, resources.getString(R.string.app_name)).apply { mkdirs() } }
@@ -144,23 +181,25 @@ class AddFragment : Fragment() {
         binding.lan.text = lan
 
         binding.add.setOnClickListener {
-            val imageByteArray = savedUri?.let { uri ->
-                requireContext().contentResolver.openInputStream(uri)?.use { inputStream ->
-                    inputStream.readBytes()
+            if(this::savedUri.isInitialized) {
+                val imageByteArray = savedUri.let { uri ->
+                    requireContext().contentResolver.openInputStream(uri)?.use { inputStream ->
+                        inputStream.readBytes()
+                    }
                 }
-            }
 
-            if (imageByteArray != null) {
-                realmManager.posicionsDao.insertItem(
-                    binding.title.text.toString(),
-                    lat!!.toDouble(),
-                    lan!!.toDouble(),
-                    imageByteArray
-                )
+                if (imageByteArray != null) {
+                    realmManager.posicionsDao.insertItem(
+                        binding.title.text.toString(),
+                        lat!!.toDouble(),
+                        lan!!.toDouble(),
+                        imageByteArray
+                    )
+                }
+                Toast.makeText(requireContext(), "Added!", Toast.LENGTH_SHORT).show()
+                val action = AddFragmentDirections.actionAddFragmentToMapFragment()
+                findNavController().navigate(action)
             }
-            Toast.makeText(requireContext(), "Added!", Toast.LENGTH_SHORT).show()
-            val action = AddFragmentDirections.actionAddFragmentToMapFragment()
-            findNavController().navigate(action)
         }
     }
 

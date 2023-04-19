@@ -24,7 +24,7 @@ class MapFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         v_supportActionBar.show()
         v_supportActionBar.title = "Flyer"
         // Initialize view
@@ -47,7 +47,7 @@ class MapFragment : Fragment() {
                 } else {
                     marker.showInfoWindow()
                 }
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 10f))
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 15f))
                 true
             }
 
@@ -61,7 +61,7 @@ class MapFragment : Fragment() {
                 markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
                 googleMap.clear()
                 // Animating to zoom the marker
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                 // Add marker on map
                 googleMap.addMarker(markerOptions)
 

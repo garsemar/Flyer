@@ -77,7 +77,6 @@
                 android:name="bookId"
                 android:defaultValue="null" />
         </action>
-        <argument android:name="bookId" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -102,6 +101,9 @@
         <argument android:name="id"
             app:argType="string"
             android:defaultValue="null" />
+        <action
+            android:id="@+id/action_detailFragment_to_bookmarksFragment"
+            app:destination="@id/bookmarksFragment" />
     </fragment>
     <fragment
         android:id="@+id/logOutFragment"
