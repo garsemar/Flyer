@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.garsemar.flyer.MainActivity.Companion.realmManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class LogOutFragment : Fragment() {
     override fun onCreateView(
@@ -21,8 +22,8 @@ class LogOutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        GlobalScope.launch {
-            // realmManager.realmManager.logOut()
+        runBlocking {
+            realmManager.realmManager.logOut()
         }
         val action = LogOutFragmentDirections.actionLogOutFragmentToHomeFragment()
         findNavController().navigate(action)
